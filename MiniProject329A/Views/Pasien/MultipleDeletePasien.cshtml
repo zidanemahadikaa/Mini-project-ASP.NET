@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model List<int>
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+}
+
+<div class="card">
+    <div class="card-body">
+        <div>Apakah anda akan menghapus</div>
+        @foreach(string name in ViewBag.Name)
+        {
+            <div><b>@name</b></div>
+        }
+        <div>sebagai pasien</div>
+    </div>
+    <div class="card-footer text-end">
+        <button id="btnDelete" type="button" class="btn btn-danger">Ya</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Tidak</button>
+    </div>
+</div>
+
+<script> 
+    $("#btnDelete").click(() => {
+        let arrId = "@string.Join(',',Model)".split(',');
+        //Submit data via AJAX
+        $.ajax({
+            url: "/Pasien/MultipleDelete",
+            type: "post",
+            data: {"listId": arrId, "userId": @userId},
+            dataType: "json",
+            beforeSend: function () {
+
+            },
+            success: function (response) {
+
+                debugger;
+                if (response.statusCode == 200 || response.statusCode == 201) {
+                    location.reload();
+                    //$("#tabList").load("/Pasien/ListPasien/" + @userId);
+                    //$("#ToggleModalBody").modal("hide");
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function (errResponse) {
+                // Process when Controller call Failed
+                debugger;
+                alert("Hapus Pasien Gagal!");
+            }
+        });
+    });
+</script>

@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VMTblMEducationLevel?
+@{
+    Layout = null;
+}
+<form id="frmEditEducationalLevel" method="post" asp-action="Edit">
+    <div class="card">
+        <div class="card-header h3">@ViewBag.Title</div>
+        <div class="card-body">
+            <input type="hidden" name="Id" value="@Model.Id"/>
+            <input type="hidden" name="ModifiedBy" value="1" />
+            <div>
+                <label>Name<sup class="text-danger">*</sup></label>
+                <input class="form-control" id="valName" type="text" name="Name" value="@Model.Name"/>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //Create method for edut education level validator
+    $.validator.addMethod(
+        "TingkatPendidikan",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/EducationLevel/ValidasiPendidikan/",
+                type: "post",
+                data: { Name: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "Jenjang Pendidikan tidak valid"
+    );
+
+    $.validator.addMethod(
+        "DataDouble",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/EducationLevel/ValidasiIfExist/",
+                type: "post",
+                data: { Name: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    alert(response.message);
+                    result = false;
+                }
+            });
+            return result;
+        },
+        "Tingkat Pendidikan sudah tersedia"
+    )
+
+    //Validator check
+    $("#frmEditEducationalLevel").validate({
+        errorClass: "text-danger",
+        rules: {
+            Name: {
+                "required": true,
+                "minlength": 2,
+                "maxlength": 10,
+                "TingkatPendidikan": true,
+                "DataDouble": true
+            }
+        },
+        messages:{
+            Name: {
+                "required": "*Silahkan masukkan tingkat pendidikan",
+                "minlength": "*Minimal 2 karakter",
+                "maxlength": "*Maximal 10 karakter",
+                "TingkatPendidikan": "*Tingkat Pendidikan tidak valid",
+                "DataDouble": "*Tingkat pendidikan sudah pernah ditambahkan"
+            } 
+        },
+        submitHandler: function () {
+            return false;
+        },
+    });
+
+    $("#frmEditEducationalLevel").submit(function (event) {
+        event.preventDefault();
+
+        let data = $("#valName").serialize();
+
+        if ($("#frmEditEducationalLevel").valid()) {
+            $.ajax({
+                url: "/EducationLevel/Edit/",
+                type: "post",
+                data: data,
+                dataType: "json",
+                beforeSend: function () { },
+                success: function (response) {
+                    debugger;
+                    if (response.statusCode == 200 || response.statusCode == 201) {
+                        $("#staticModalBody").html(response);
+                        location.reload();
+                    }
+                    else {
+                        alert(response.message)
+                    }
+                },
+                error: function (errResponse) {
+                    debugger;
+                    aler("Jenjang pendidikan gagal");
+                }
+            })
+        }
+    });
+</script>

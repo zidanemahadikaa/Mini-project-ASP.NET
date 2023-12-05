@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+    string? namaUser = Context.Session.GetString("UserNama");
+}
+
+<div class="card">
+    <div class="card-header text-info" style="font-size:27px;">Sign Out</div>
+    <div class="card-body">
+        <i id="tblBahaya" class="fas fa-exclamation-triangle" style="color:red;"></i>
+        @namaUser, Apakah anda yakin ingin keluar?
+    </div>
+    <div class="card-footer text-end">
+        <div class="btn-group">
+            <button id="btnSubmit" type="button" class="btn btn-danger float-end">Keluar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#btnSubmit").click(() => {
+        $.ajax({
+            url: "/Login/Logout",
+            beforesend: function () {
+            },
+            success: function (response) {
+                debugger;
+                if (response.statusCode == 200) {
+                    location.replace("/Home/Index/");
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function (errresponse) {
+                debugger;
+                alert("Process failed");
+            }
+        });
+    });
+</script>

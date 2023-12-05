@@ -1,0 +1,78 @@
+﻿@using MiniProject329A.DataModel;
+@* @*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VMTblMLocation?
+
+@{
+    int? userId = Context.Session.GetInt32("UserId");
+
+    Layout = null;
+}
+@foreach (VMTblMMedicalFacility medFac in ViewBag.MedicalFacility)
+{
+    foreach(VMTblMBiodataAddress ba in ViewBag.BiodataAddress)
+    {
+        if(Model.Id == medFac.LocationId || Model.Id == ba.LocationId)
+        {
+            <div class="card">
+                <div class="card-header">@ViewBag.Title</div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <i class="fas fa-exclamation-triangle float-xxl-start text-danger"></i>
+                        <span>Tidak Dapat Menghapus Lokasi '@Model.Name'</span>
+                        <i class="fas fa-exclamation-triangle float-xxl-start text-danger"></i>
+                    </div>
+                    <div class="text-center">Lokasi Tersebut Masih Digunakan</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">@ViewBag.Title</div>
+                <div class="card-body">
+                    <i class="fas fa-exclamation-triangle float-xxl-start text-danger"></i>
+                    <span>Hapus Lokasi : @Model.Name ?</span>
+                </div>
+                <div id="responseMessageDeleteLocation" class="text-danger" style="display: none;"></div>
+
+                <div class="card-footer text-end">
+                    <button id="btnDeleteAccLocation" type="button" class="btn col-12" style="background-color:#ADDFFF">Hapus</button>
+                </div>
+            </div>
+        }
+    }
+}
+
+    
+           
+
+<script>
+    $("#btnDeleteAccLocation").click(() => {
+        $.ajax({
+            url: "/Location/Delete",
+            type: "post",
+            data: { "id": @Model.Id, "userId": @userId },
+            datatype: "json",
+            beforeSend: function () {
+                //Proses sebelum memanggil Controller
+            },
+            success: function (response) {
+                //Proses after Controller finished
+                debugger;
+                if (response.statusCode == 201 || response.statusCode == 200) {
+                    location.reload();
+                }
+                else {
+                    $("#responseMessageDeleteLocation").html(response.message).show();
+                }
+            },
+            error: function (errResponse) {
+                //Proses Ketika Controller terjadi kesalahan
+                debugger;
+                alert("Delete Payment Method prosess failed");
+            }
+        });
+    });
+</script>

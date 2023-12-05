@@ -1,0 +1,221 @@
+﻿@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Pagination<VMTblTAppointment>
+@{
+    Layout = null;
+    CultureInfo ID = new CultureInfo("id-ID");
+    int? userId = Context.Session.GetInt32("UserId");
+}
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <span class="h3 text-white">Riwayat Kedatangan</span>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+             <form class="input-group w-50" id="SearchDocPasien">
+                 <input type="hidden" name="id" value="@userId" />
+                 <input placeholder="Cari nama pasien atau nama dokter" class="form-control" name="filter" value="@ViewBag.filter"/>
+                 <button type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
+              </form>
+                 <div class="dropdown">
+                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                          Urutkan
+                     </button>
+                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                       <li><button class="dropdown-item" type="button">Tanggal Kedatangan</button></li>
+                       <li><button class="dropdown-item" type="button">Umur</button></li>
+                       <li><button class="dropdown-item" type="button">Something else here</button></li>
+                     </ul>
+                </div>
+         </div>
+         <div class="d-flex justify-content-end mt-3">
+              <div class="d-flex justify-content-sm-around">
+                <button class="bg-light"><i class="fas fa-sort-alpha-down"></i></button>
+                <button id="pageSize5" class="m-1">
+                    5
+                </button>
+                <i class="fas fa-grip-lines-vertical"></i>
+                <button id="pageSize10" class="m-1 ms-1">
+                    10
+                </button>
+            </div>
+         </div>
+         <hr/>
+        @if(Model.Count > 0)
+        {
+            @foreach(VMTblTAppointment data in Model)
+            {
+                <div class="card">
+                 <div class="card-body">
+                     <div class="row align-content-between">
+                         <div class="col-6">
+                             <div style="font-weight:bold; font-size:large;">
+                                 @data.CustomerName
+                             </div>
+                             <div style="font-size:medium;">@data.AppointmentDate.GetValueOrDefault().ToString("D", ID),
+                                    @foreach(VMTblTDoctorOffice rsName in ViewBag.RSName)
+                                    {
+                                        if(data.DoctorOfficeId == rsName.Id)
+                                        {
+                                            @rsName.MedicalFacilityName
+                                        }
+                                    }
+                                </div>
+                             <div style="font-size:small;">                                    
+                                    @data.DoctorName, Konsultasi</div>
+                         </div>
+                         <div class="col-6 text-end">
+                             <button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                               <i class="fas fa-ellipsis-h"></i>
+                             </button>
+                             <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+                               <li><a class="dropdown-item" href="#">Beri Ulasan</a></li>
+                               <li><a class="dropdown-item" href="#">Beri Penilaian</a></li>
+                               <li><a class="dropdown-item" href="#">Cek status</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="card-footer bg-primary">
+                     <div class="accordion-item">
+                           <button class="accordion-button collapsed bg-light" style="font-size:small;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-@data.Id" aria-expanded="false" aria-controls="flush-collapseOne-@data.Id">
+                           Lihat detail Kedatangan
+                           </button>
+                         <div id="flush-collapseOne-@data.Id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                             <div class="row">
+                                 <div class="col-6">
+                                     <div class="h6 text-center">Diagnosa</div>
+                                     <p class="text-justify">@data.Diagnose</p>
+                                 </div>
+                                 <div class="col-6">
+                                     <div class="h6 text-center">Cetak Resep Digital</div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+            }
+        }
+        else
+        {
+            <div class="text-center">Data tidak ditemukan</div>
+        }  
+    </div>
+    <div class="card-footer d-flex justify-content-center">
+        <div class="btn-group">
+            <a id="prev" class="btn btn-light @(Model.PageIndex <= 1 ? "disabled" : "")" title="Previous Page..."
+               asp-controller="Pasien" asp-action="AppointmentHistoryPasien"
+               asp-route-filter="@ViewBag.Filter"
+               asp-route-orderBy="@ViewBag.OrderBy"
+               asp-route-pageNumber="@(Model.PageIndex <= 1 ? Model.PageIndex : Model.PageIndex-1)"><i class="fas fa-backward"></i></a>
+            <span class="input-group-text">Page @Model.PageIndex of @Model.TotalPages</span>
+            <a id="next" class="btn btn-light @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" title="Next Page..."
+               asp-controller="Pasien" asp-action="AppointmentHistoryPasien"
+               asp-route-filter="@ViewBag.Filter"
+               asp-route-orderBy="@ViewBag.OrderBy"
+               asp-route-pageNumber="@(Model.PageIndex >= Model.TotalPages ? Model.PageIndex : Model.PageIndex+1)"><i class="fas fa-forward"></i></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#SearchDocPasien").submit(e => {
+        e.preventDefault()
+        $.ajax({
+            url: "/Pasien/AppointmentHistoryPasien/",
+            type: "post",
+            data: $("#SearchDocPasien").serialize(),
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                if (response.statusCode == 200 || response.statusCode == 201) {
+                    $("#TabList").load("/Pasien/AppointmentHistoryPasien/" + @userId);
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#next").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/AppointmentHistoryPasien?id=@userId&pageNumber=" + @(Model.PageIndex + 1),
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#prev").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/AppointmentHistoryPasien?id=@userId&pageNumber=" + @(Model.PageIndex - 1),
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#pageSize5").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/AppointmentHistoryPasien?id=@userId&pageNumber=" + @(Model.PageIndex)+"&pageSizeNumber=5",
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#pageSize10").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/AppointmentHistoryPasien?id=@userId&pageNumber=" + @(Model.PageIndex)+"&pageSizeNumber=10",
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+</script>

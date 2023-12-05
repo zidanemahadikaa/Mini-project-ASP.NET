@@ -1,0 +1,114 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<form id="frmBiodata" method="post" asp-action="InputData">
+    <div class="card">
+        <div class="card-header text-info" style="font-size:27px;"><strong>@ViewBag.Title</strong></div>
+        <div class="card-body">
+                <input type="hidden" id="valEmail" name="Email" value="@ViewBag.Email" />
+                <input type="hidden" id="valOTP" name="OTP" value="@ViewBag.OtpCode" />
+                <input type="hidden" id="valPassword" name="Password" value="@ViewBag.Password" />
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div>Mohon isi sesuai data anda</div>
+                        <div>&nbsp;</div>
+                            <label><i>Nama Lengkap</i><sup class="text-danger">*</sup></label>
+                            <input class="form-control" id="valNama" type="text" name="Fullname" placeholder="Insert your name..." />
+                
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div>&nbsp;</div>
+
+                            <label><i>Nomor Handphone</i><sup class="text-danger">*</sup></label>
+                            <input class="form-control" id="valHP" type="number" name="MobilePhone" placeholder="Insert your phone number..." />
+
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div>&nbsp;</div>
+                        <select id="valRole" name="RoleId" class="form-control">
+                            <option value="">--Daftar sebagai--</option>
+                            @foreach (VMTblMRole r in ViewBag.Role)
+                            {
+                                <option value="@r.Id">@r.Name</option> 
+                            }
+                        </select>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+        </div>
+        <div class="card-footer text-center">
+            <button id="btnOTP" type="submit" class="btn btn-primary">Konfirmasi</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#frmBiodata").validate({
+        errorClass: "text-danger",
+        rules: {
+            Fullname: {
+                "required": true
+            },
+            MobilePhone: {
+                "required": true
+            },
+            RoleId: {
+                "required": true
+            }
+        },
+        messages: {
+            Fullname: {
+                "required": "*Tolong masukkan nama anda"
+            },
+            MobilePhone: {
+                "required": "*Tolong masukkan nomor handphone anda"
+            },
+            RoleId: {
+                "required": "*Tolong pilih anda mendaftar sebagai apa"
+            }
+        },
+        submitHandler: function () {
+            debugger;
+            return false;
+        }
+    });
+
+    $("#frmBiodata").submit(function (event) {
+        event.preventDefault();
+
+        let data = $("#frmBiodata").serialize()
+        debugger;
+
+        if ($("#frmBiodata").valid()) {
+            $.ajax({
+                url: "/Register/InputData/",
+                type: "post",
+                data: data,
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    if (response.statusCode == 201) {
+                        location.reload();
+                    }
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert("Process Failed");
+                }
+            })
+        }
+    })
+</script>

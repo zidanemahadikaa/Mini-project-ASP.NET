@@ -1,0 +1,104 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    int? userId = Context.Session.GetInt32("UserId");
+}
+
+<body>
+    <div class="container-fluid bg-primary text-white pt-4 pb-xxl-5 d-lg-flex">
+        <div class="container-fluid pb-2">
+            <div class="row">
+                <div class="col-4 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a class="h1 text-white mb-0" asp-area="" asp-controller="Home" asp-action="Index">Healthy<span class="text-dark">Together</span></a>
+                </div>
+                <div class="col-8 d-flex justify-content-lg-end">
+                    <form id="frmFind" class="input-group w-50" asp-action="Index">
+                        <input name="filter" id="txtFilter" placeholder="Search...." class="form-control" />
+                        <button type="submit" id="btnFilter" class="input-group-text"><i class="fas fa-search"></i></button>
+                    </form>
+                    <button data-id="@userId" type="button" class="btn btn-info mx-2" title="Profile">
+                        <i class="fas fa-user text-white"></i>
+                    </button>
+                    <div class="flex-shrink-0 dropdown">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu text-small shadow mx-1" aria-labelledby="dropdownUser2" style="">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Dokter" asp-action="DokterProfile">Profile</a></li>
+                            <li><a class="dropdown-item" id="idKeluar" data-bs-toggle="modal" data-bs-target="#staticModal">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fuild" id="profileDokter">
+        <div class="row">
+            <div class="col-2 bg-primary">
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="container-fluid">
+                        <h class="text-white">Menu</h>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="true" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                </nav>
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                                Jenis Kurir
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+                                Jadwal Kunjungan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                                Keranjang Obat
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-2 card p-2 m-1 text-center">
+                <div class="card-body text-center">
+                    <p class="card-text">Buat Janji</p>
+                    <a href="#" class="btn btn-primary text-center">Klik</a>
+                </div>
+            </div>
+            <div class="col-2 card p-2 m-1 text-center">
+                <div class="card-body text-center">
+                    <p class="card-text">Jadwal Kunjungan</p>
+                    <a href="#" class="btn btn-primary text-center">Klik</a>
+                </div>
+            </div>
+            <div class="col-2 card p-2 m-1 text-center">
+                <div class="card-body text-center">
+                    <p class="card-text">Keranjang obat</p>
+                    <a href="#" class="btn btn-primary text-center">Klik</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    $(".btn-info").click(function (event) {
+        let userId = $(this).data("id");
+        debugger;
+
+        $("#profileDokter").load("/Dokter/DokterProfile/" + userId);
+    })
+    $("#idKeluar").click(function (event) {
+        debugger;
+        $("#staticModalBody").load("/Login/KonfirmKeluar/")
+
+    });
+</script>

@@ -1,0 +1,281 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MiniProject329A
+build_property.RootNamespace = MiniProject329A
+build_property.ProjectDir = C:\Users\ASUS\DATA D\Bootcamp\Xsis\miniproject329grupa\MiniProject329A\MiniProject329A\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\ASUS\DATA D\Bootcamp\Xsis\miniproject329grupa\MiniProject329A\MiniProject329A
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Admin/AdminProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5Qcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Admin/GantiFoto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cR2FudGlGb3RvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/BloodGroup/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cFxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/BloodGroup/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cFxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/BloodGroup/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/BloodGroup/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RHcm91cFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/CariObat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyaU9iYXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/CurrentDoctorSpecialization/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVudERvY3RvclNwZWNpYWxpemF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/CustomerRelation/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJSZWxhdGlvblxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/CustomerRelation/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJSZWxhdGlvblxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/CustomerRelation/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJSZWxhdGlvblxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/CustomerRelation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJSZWxhdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Dokter/DokterProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9rdGVyXERva3RlclByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Dokter/GantiFoto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9rdGVyXEdhbnRpRm90by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Dokter/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9rdGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Dokter/Tindakan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9rdGVyXFRpbmRha2FuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/EducationLevel/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWR1Y2F0aW9uTGV2ZWxcQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/EducationLevel/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWR1Y2F0aW9uTGV2ZWxcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/EducationLevel/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWR1Y2F0aW9uTGV2ZWxcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/EducationLevel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWR1Y2F0aW9uTGV2ZWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Faskes/FaskesProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFza2VzXEZhc2tlc1Byb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Faskes/GantiFoto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFza2VzXEdhbnRpRm90by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Faskes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFza2VzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/LocationLevel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYXRpb25MZXZlbFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Location/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYXRpb25cQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Location/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYXRpb25cRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Location/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYXRpb25cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Location/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Login/Button.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQnV0dG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Login/KonfirmKeluar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cS29uZmlybUtlbHVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/LupaPassword/EmailVerif.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTHVwYVBhc3N3b3JkXEVtYWlsVmVyaWYuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/LupaPassword/OtpCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTHVwYVBhc3N3b3JkXE90cENvZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/LupaPassword/OtpResend.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTHVwYVBhc3N3b3JkXE90cFJlc2VuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/LupaPassword/SetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTHVwYVBhc3N3b3JkXFNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/AddPasien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXEFkZFBhc2llbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/AppointmentHistoryPasien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXEFwcG9pbnRtZW50SGlzdG9yeVBhc2llbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/DeletePasien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXERlbGV0ZVBhc2llbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/EditPasien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXEVkaXRQYXNpZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/GantiFoto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXEdhbnRpRm90by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/ListPasien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXExpc3RQYXNpZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/MultipleDeletePasien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXE11bHRpcGxlRGVsZXRlUGFzaWVuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/PasienProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXFBhc2llblByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Pasien/TabAlamat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzaWVuXFRhYkFsYW1hdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/PaymentMethod/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1ldGhvZFxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/PaymentMethod/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1ldGhvZFxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/PaymentMethod/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1ldGhvZFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/PaymentMethod/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudE1ldGhvZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Register/Biodata.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcQmlvZGF0YS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Register/Button.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcQnV0dG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Register/EmailVerif.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcRW1haWxWZXJpZi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Register/OtpCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcT3RwQ29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Register/OtpResend.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcT3RwUmVzZW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Register/SetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0ZXJcU2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Shared/_Alert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BbGVydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Shared/_Modal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Nb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Specialization/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlY2lhbGl6YXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ASUS/DATA D/Bootcamp/Xsis/miniproject329grupa/MiniProject329A/MiniProject329A/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-vqh4ztudii

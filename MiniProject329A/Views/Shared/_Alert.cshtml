@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.InfoMsg = Context.Session.GetString("infoMsg") ?? String.Empty;
+    ViewBag.WarningMsg = Context.Session.GetString("warningMsg") ?? String.Empty;
+    ViewBag.ErrMsg = Context.Session.GetString("errMsg") ?? String.Empty;
+
+    Context.Session.SetString("infoMsg", String.Empty);
+    Context.Session.SetString("warningMsg", String.Empty);
+    Context.Session.SetString("errMsg", String.Empty);
+}
+
+<div id="alertPlaceHolder" class="alert alert-dismissible fade show" role="alert" aria-hidden="true">
+</div>
+
+
+
+<script>
+    $(Document).ready(() => {
+        function AlertPopUp(message, type) {
+
+            $("#alertPlaceHolder").append(
+                '<div class="alert alert-' + type + '">' +
+                '<i class="fas float-lg-start fa-info-circle mr-2"></i>' +
+                message +
+                '<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>'
+                + '</div>'
+            );
+        }
+        if ('@ViewBag.infoMsg' != "") AlertPopUp("@Html.Raw(ViewBag.infoMsg)", "info");
+        if ('@ViewBag.warningMsg' != "") AlertPopUp("@Html.Raw(ViewBag.warningMsg)", "warning");
+        if ('@ViewBag.errMsg' != "") AlertPopUp("@Html.Raw(ViewBag.errMsg)", "danger");
+
+        $(".btninfo").click(() => { });
+
+        $(".btnwarning").click(() => { });
+
+        $(".btndanger").click(() => { });
+
+    });
+</script>

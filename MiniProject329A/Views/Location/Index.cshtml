@@ -1,0 +1,184 @@
+﻿@using MiniProject329A.AddOns;
+
+@*
+*@
+@model Pagination<VMTblMLocation>
+@{
+
+}
+
+<div class="card">
+    <div class="card-header text-center fw-bold d-flex" style="background-color:#ADDFFF">
+        <a title="Ke Home" class="navbar-brand text-black" asp-area="" asp-controller="Admin" asp-action="Index"><i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="card-body" style="background-color:#F0FFFF">
+        <div class="d-flex justify-content-between">
+            <div class="col-6">
+                <form id="frmFind" asp-action="Index" class="input-group w-50 col-5">
+                    <div class="input-group">
+                        <input name="filter" type="text" placeholder="Cari Lokasi..." class="input-group form-control" value="@ViewBag.Filter" />
+                        <button type="submit" id="btnFilter" class="input-group-text">Cari</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-3">
+
+                @* Form Level Belum Selesai *@
+                <select name="Location" class="form-control">
+                    <option value="@ViewBag.LocationLevel" class="text-center">-- Pilih Level Lokasi --</option>
+                    @foreach (VMTblMLocationLevel locationlevel in ViewBag.LocationLevel)
+                    {
+                        <option class="text-center" value="@locationlevel.Id">@locationlevel.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr style="background-color:#ADDFFF">
+                <td class="col-1 dropdown">
+                    <a class="nav-link text-dark dropdown" title="Urutkan" role="button" id="SortLocation" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-sort"></i></a>
+                    <ul style="background-color:#D3E3FC" class="dropdown-menu" style="background-color:#D3E3FC" aria-labelledby="SortLocation">
+                        <li>
+                            <button class="dropdown-item btn" style="background-color:#D3E3FC">
+                                <a class="text-black btn fw-bold " style="background-color:#D3E3FC" asp-controller="Location" asp-action="Index" asp-route-orderBy="@ViewBag.OrderName">
+                                    Sort <i class="fas fa-@(ViewBag.OrderName=="name"? "sort-alpha-down":"sort-alpha-down-alt")"></i>
+                                </a>
+                            </button>
+                        </li>
+                    </ul>
+                </td>   
+                <td class="col-4 text-center">Nama Lokasi</td>
+                <td class="col-2 text-center">Level Lokasi</td>
+                <td class="text-center col-4">Wilayah</td>
+                <td class="col-1 text-center h5 fw-bold">
+                    <button class="btn text-black" id="frmAddLocationIndex" style="background-color:#ADDFFF" title="Tambah Lokasi"
+                            data-bs-target="#staticModal" data-bs-toggle="modal">
+                        <i class="fas fa-plus fw-bold"></i>
+                    </button>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count > 0)
+            {
+                @foreach (VMTblMLocation location in Model)
+                {
+                    <tr>
+                        <td class="col-1"></td>
+                        <td class="text-center">@location.Name</td>
+                        <td class="text-center">
+                            @foreach (VMTblMLocationLevel locationLevel in ViewBag.LocationLevel)
+                            {
+                                if (locationLevel.Id == location.LocationLevelId)
+                                {
+                                    @locationLevel.Name
+                                }
+                            }
+                        </td>
+                        <td class="text-center" value="">
+                            @foreach (VMTblMLocation loc in ViewBag.Location)
+                            {
+                                if (location.ParentId == loc.Id)
+                                {
+                                    foreach(VMTblMLocationLevel locLevel in ViewBag.LocationLevel)
+                                    {
+                                        if (locLevel.Id == loc.LocationLevelId)
+                                        {
+                                            @(locLevel.Abbreviation + ' ')
+                                        }
+                                    }
+                                    @loc.Name
+                                }
+                            }
+                        </td>
+                        <td class="dropdown text-center" title="Setting">
+                            <a class="nav-link text-dark dropdown-toggle" role="button" id="DropSetLocation" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-wrench"></i></a>
+                            <ul class="dropdown-menu" style="background-color:#D3E3FC" aria-labelledby="DropSetLocation">
+                                <li>
+                                    <button class="dropdown-item btn btn-warning fw-bold" style="background-color:#D3E3FC" data-id="@location.Id" title="Edit.." data-bs-toggle="modal" data-bs-target="#staticModal">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                </li>
+                                <h3></h3>
+                                <li>
+                                    <button class="dropdown-item btn btn-danger fw-bold" style="background-color:#D3E3FC" data-id="@location.Id" title="Hapus.." data-bs-toggle="modal" data-bs-target="#staticModal">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="col-12 fw-bold text-center">Tidak Ditemukan</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr class="text-center" style="background-color:#ADDFFF">
+                <td class="text-start">
+                    <a class="btn @(Model.PageIndex <= 1 ? "disabled" : "")" title="Kembali Ke Halaman Sebelumnya..."
+                       asp-controller="Location" asp-action="Index" asp-route-filter="@ViewBag.Filter" asp-route-orderBy="@ViewBag.OrderBy"
+                       asp-route-pageNumber="@(Model.PageIndex <= 1 ? 1 : Model.PageIndex - 1)">
+                        <i class="fas fa-angle-double-left"></i>
+                    </a>
+                </td>
+                <td></td>
+                <td class="dropdown text-center fw-bold">
+                @if (Model.TotalPages > 0)
+                {
+                    <a class="nav-link text-dark dropdown-toggle text-center" role="button" id="DropPageLok" data-bs-toggle="dropdown"
+                        aria-expanded="false">Halaman @Model.PageIndex/@Model.TotalPages</a>
+                    <ul class="dropdown-menu" style="background-color:#F0FFFF" aria-labelledby="DropPageLok">
+                        <li style="background-color:#F0FFFF">
+                            <button class="dropdown-item fw-bold" style="background-color:#F0FFFF">
+                                <div id="pagination-container" class="small" style="background-color:#F0FFFF">
+                                        @for (int pageIndex = 1; pageIndex <= Model.TotalPages; pageIndex++)
+                                        {
+                                        <a class="page-link text-black text-center" style="background-color:#F0FFFF"
+                                            href="@Url.Action("Index", "Location", new { filter = ViewBag.Filter, orderBy =
+                                                ViewBag.OrderBy, pageNumber = pageIndex })">@pageIndex</a>
+                                        }
+                                </div>
+                            </button>
+                        </li>
+                    </ul>
+                }
+                </td>
+                <td></td>
+                <td class="text-center">
+                    <a class="btn @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" title="Halaman Selanjutnya..."
+                       asp-controller="Location" asp-action="Index" asp-route-filter="@ViewBag.Filter" asp-route-orderBy="@ViewBag.OrderBy"
+                       asp-route-pageNumber="@(Model.PageIndex >= Model.TotalPages ? Model.TotalPages : Model.PageIndex + 1)">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script>
+    $("#frmAddLocationIndex").click(function (event) {
+        $("#staticModalLabel").html("Menambahkan Lokasi");
+        $("#staticModalBody").load("Location/Add");
+    });
+
+    $(".btn-warning").click(function (event) {
+        let LocId = $(this).data("id");
+        $("#staticModalLabel").html("Edit");
+        $("#staticModalBody").load("Location/Edit/" + LocId);
+    });
+
+    $(".btn-danger").click(function (event) {
+        let LocId = $(this).data("id");
+        $("#staticModalLabel").html("Hapus");
+        $("#staticModalBody").load("Location/Delete/" + LocId);
+    });
+</script>

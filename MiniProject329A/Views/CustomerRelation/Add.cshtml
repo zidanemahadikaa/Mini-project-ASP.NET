@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model VMTblMCustomerRelation?
+@{
+    Layout = null;
+}
+
+<form id="AddCustomerRelation" method="post" asp-action="Add">
+    <div class="card">
+        <div class="card-header h3">@ViewBag.Title</div>
+        <div class="card-body">
+            <input type="hidden" name="CreateBy" value="1"/>
+            <label>Nama<sup class="text-danger">*</sup></label>
+            <input class="form-control mb-2" type="text" name="Name"/>
+        </div>
+        <div class="card-footer">
+            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#AddCustomerRelation").validate({
+        errorClass:"text-danger",
+        rules: {
+            Name: {
+                "required":true
+            }
+        },
+        submitHandler: function(){
+            debugger;
+            return false;
+        }
+    });
+
+    $("#AddCustomerRelation").submit(function(event) {
+        event.preventDefault();
+
+        if($("#AddCustomerRelation").valid()) {            
+                $.ajax({
+                    url:"CustomerRelation/Add",
+                    type:"post",
+                    data: $("#AddCustomerRelation").serialize(),
+                    dataType:"json",
+                    beforeSend: function(){
+
+                    },
+                    success: function(response){
+                        debugger;
+                        if(response.statusCode == 200 || response.statusCode == 201){
+                            location.reload();
+                        }
+                        else{
+                            alert(response.message);
+                        }
+                    },
+                    error: function(errResponse){
+                        debugger;
+                        alert("proses gagal");
+                    }                
+            });           
+        }  
+    });
+</script>

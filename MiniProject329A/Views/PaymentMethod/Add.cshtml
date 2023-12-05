@@ -1,0 +1,79 @@
+﻿
+@model VMTblMPaymentMethod
+
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+
+
+}
+
+<form id="frmAddPaymentMethod" method="post" asp-action="Add">
+    <div class="card">
+        <div class="card-header h3">Add New Payment Method</div>
+        <div class="card-body">
+            <input type="hidden" name="CreateBy" value="@userId" />
+            <div class="input-group">
+                <label class="col-2 input-group-text">Metode Pembayaran<sup class="text-danger">*</sup></label>
+                <input class="form-control" type="text" name="Name" placeholder="Input Payment Method...." />
+            </div>
+            <div id="responseMessageAddPaymentMethod" class="text-danger" style="display: none;"></div>
+
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <button id="btnSubmit" type="submit" style="background-color:#ADDFFF" class="btn col-12 fw-bold">Tambah</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $("#frmAddPaymentMethod").validate({
+        errorClass: "text-danger",
+        rules: {
+            "Name": {
+                "required": true
+            }
+        },
+        messages: {
+            "Name": {
+                "required": "Nama Harus Diisi"
+            }
+        },
+        submitHandler: function () {
+            return false;
+        }
+    });
+
+    $("#frmAddPaymentMethod").submit(function (event) {
+        event.preventDefault();
+        debugger;
+
+        if ($("#frmAddPaymentMethod").valid()) {
+            $.ajax({
+                url: "/PaymentMethod/Add",
+                type: "post",
+                data: $("#frmAddPaymentMethod").serialize(),
+                dataType: "json",
+                beforeSend: function () {
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.statusCode == 201 || response.statusCode == 200) {
+                        location.reload();
+                    }
+                    else {
+                        $("#responseMessageAddPaymentMethod").html(response.message).show();
+                    }
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert("Menambahkan Metode Pembayaran Gagal");
+                }
+            })
+        }
+    });
+</script>
+
+
+

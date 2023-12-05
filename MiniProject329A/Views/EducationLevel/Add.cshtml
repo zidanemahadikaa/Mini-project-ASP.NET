@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VMTblMEducationLevel
+@{
+    Layout = null;
+}
+<form id="frmAddEducationLevel" method="post" asp-action="Add">
+    <div class="card">
+        <div class="card-header h3">Add New Education Level</div>
+        <div class="card-body">
+            <input type="hidden" name="CreateBy" value="1"/>
+            <div>
+                <label>Name<sup class="text-danger">*</sup></label>
+                <input class="form-control" id="valName" type="text" name="Name" placeholder="Input Educational Level ..."/>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <button class="btn btn-primary" id="btnSubmit" type="submit">Submit</button>
+            <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //Create method for education level validator
+    $.validator.addMethod(
+        "TingkatPendidikan",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/EducationLevel/ValidasiPendidikan/",
+                type: "post",
+                data: { Name: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "Jenjang Pendidikan tidak valid"
+    );
+
+    $.validator.addMethod(
+        "DataDouble",
+        function(value, element, params){
+            var result = false;
+
+            $.ajax({
+                url: "/EducationLevel/ValidasiIfExist/",
+                type: "post",
+                data: { Name: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    alert(response.message);
+                    result = false;
+                }
+            });
+            return result;
+        },
+        "Tingkat Pendidikan sudah tersedia"
+    )
+
+    //Validator check
+    $("#frmAddEducationLevel").validate({
+        errorClass: "text-danger",
+        rules: {
+            Name: {
+                "required": true,
+                "minlength": 2,
+                "maxlength": 10,
+                "TingkatPendidikan": true,
+                "DataDouble" : true
+            }
+        },
+        messages: {
+            Name: {
+                "required": "*Silahkan masukkan tingkat pendidikan",
+                "minlength": "*Tingkat pendidikan minimal 2 karakter",
+                "maxlength": "*Tingkat pendidikan maximal 10 karakter",
+                "TingkatPendidikan": "*Tingkat Pendidikan tidak Valid",
+                "DataDouble": "*Tingkat pendidikan sudah pernah ditambahkan"
+            }
+        },
+        submitHandler: function () {
+            debugger;
+            return false;
+        }
+    });
+
+    $("#frmAddEducationLevel").submit(function (event) {
+        event.preventDefault();
+
+        let data = $("#valName").serialize();
+       
+        if ($("#frmAddEducationLevel").valid()) {
+            $.ajax({
+                url: "/EducationLevel/Add/",
+                type: "post",
+                data: data,
+                dataType: "json",
+                beforeSend: function () { },
+                success: function (response) {
+                    if (response.statusCode == 201 || response.statusCode == 200) {
+                        $("#staticModalBody").html(response);
+                        location.reload();
+                    }
+                    else {
+                        if(response.statusCode == 201 || response.statusCode == 200){
+                            location.reload();
+                        }
+                        else
+                        {
+                            alert(response.message);
+                        }
+                    }
+                },
+                error: function (errResponse) {
+                    alert("Add new Education Level process failed");
+                }
+            })
+        }
+    });
+</script>

@@ -1,0 +1,118 @@
+﻿@model VMTblMLocation
+
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+
+
+}
+
+<form id="frmAddLocationzz" method="post" asp-action="Add">
+    <div class="card">
+        <div class="card-header h3">Tambah Lokasi Baru</div>
+        <div class="card-body">
+            <div class="row my-1">
+                <div class="col-12">
+                    <div class="input-group">
+                        <label class="col-4 input-group-text">Wilayah</label>
+                        <select id="AddNameLocationFull" name="ParentId" class="form-control input-group-text bg-white">
+                            <option value="">-- Pilih Wilayah --</option>
+                            @foreach (VMTblMLocation location in ViewBag.Location)
+                            {
+                                <option value="@location.Id">
+                                    @foreach (VMTblMLocationLevel locLevel in ViewBag.LocationLevel)
+                                    {
+                                        if(locLevel.Id==location.LocationLevelId)
+                                        {
+                                            @(locLevel.Abbreviation + ' ')
+                                        }
+                                    }
+                                    @location.Name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-12">
+                    <div class="input-group">
+                        <label class="col-4 input-group-text">Level Lokasi</label>
+                        <select id="AddlocationLevelId" name="LocationLevelId" class="form-control input-group-text bg-white">
+                            <option value="">-- Pilih Lokasi Level --</option>
+                            @foreach (VMTblMLocationLevel locationLevel in ViewBag.LocationLevel)
+                            {
+                                <option value="@locationLevel.Id">@locationLevel.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <input type="hidden" name="CreateBy" value="@userId" />
+            <div class="input-group my-1">
+                <label class="input-group-text col-4">Nama Lokasi<sup class="text-danger">*</sup>:</label>
+                <input class="input-group-text bg-white text-start col-8" type="text" name="Name" placeholder="--Input Nama Lokasi--" />
+            </div>
+            <div id="responseMessageAddLocation" class="text-danger" style="display: none;"></div>
+
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <button id="btnSubmit" type="submit" style="background-color:#ADDFFF" class="btn col-12 fw-bold">Tambah</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#frmAddLocationzz").validate({
+        errorClass: "text-danger text-center",
+        rules: {
+            "Name": {
+                "required": true
+            },
+            "LocationLevelId": {
+                "required": true
+            }
+        },
+        messages: {
+            "Name": {
+                "required": "Nama Harus Diisi"
+            },
+            "LocationLevelId": {
+                "required": "Level Lokasi Harus Diisi"
+            }
+        },
+        submitHandler: function () {
+            return false;
+        }
+    });
+
+    $("#frmAddLocationzz").submit(function (event) {
+        event.preventDefault();
+        debugger;
+
+        if ($("#frmAddLocationzz").valid()) {
+            $.ajax({
+                url: "/Location/Add",
+                type: "post",
+                data: $("#frmAddLocationzz").serialize(),
+                dataType: "json",
+                beforeSend: function () {
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.statusCode == 201 || response.statusCode == 200) {
+                        location.reload();
+                    }
+                    else {
+                        $("#responseMessageAddLocation").html(response.message).show();
+                    }
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert("Menambahkan Metode Pembayaran Gagal");
+                }
+            })
+        }
+    });
+</script>

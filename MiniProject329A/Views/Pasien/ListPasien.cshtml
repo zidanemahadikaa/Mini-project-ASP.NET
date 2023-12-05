@@ -1,0 +1,434 @@
+﻿@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Pagination<VMTblMCustomerMember>
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+    CultureInfo ID = new CultureInfo("id-ID");
+    DateTime date = DateTime.Now;
+    DateTime? dobb;
+    int tahunLahir = 0, tahunSkrg = date.Year;
+    TimeSpan ts;
+}
+
+<style>
+    button{
+        all:unset;
+    }
+    
+</style>
+<div class="card">
+        <div class="card-header bg-primary">
+            <span class="h3 text-white">@ViewBag.Title</span>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <form class="input-group w-50" id="SearchPasien" >
+                    <input type="hidden" name="id" value="@userId"/>
+                    <input placeholder="Cari nama pasien" class="form-control" name="filter" value="@ViewBag.filter" />
+                    <button type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
+                 </form>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                             Urutkan
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <li><button id="orderName" class="dropdown-item" type="button">
+                              <a class="text-black btn fw-bold" asp-controller="Pasien" asp-action="ListPasien" asp-route-orderBy="@ViewBag.OrderName">
+                                  <i class="fas fa-@(ViewBag.OrderName=="name"? "sort-alpha-down":"sort-alpha-up-alt")"></i>
+                              </a>Name
+                            </button></li>
+                          <li><button id="OrderAge" class="dropdown-item" type="button">
+                            <a class="text-black btn fw-bold" asp-controller="Pasien" asp-action="ListPasien" asp-route-orderBy="@ViewBag.OrderAge">
+                                <i class="fas fa-@(ViewBag.OrderAge=="age"? "sort-alpha-down":"sort-alpha-up-alt")"></i>
+                            </a>Umur
+                            </button></li>
+                          <li><button id="OrderCR" class="dropdown-item" type="button">
+                            <a class="text-black btn fw-bold" asp-controller="Pasien" asp-action="ListPasien" asp-route-orderBy="@ViewBag.OrderCR">
+                                <i class="fas fa-@(ViewBag.OrderCR=="cr"? "sort-alpha-down":"sort-alpha-up-alt")"></i>
+                            </a>Relasi
+                            </button></li>
+                          <li><button id="OrderAdd" class="dropdown-item" type="button">
+                            <a class="text-black btn fw-bold" asp-controller="Pasien" asp-action="ListPasien" asp-route-orderBy="@ViewBag.OrderAdd">
+                                <i class="fas fa-@(ViewBag.OrderAdd==""? "sort-alpha-down":"sort-alpha-up-alt")"></i>
+                            </a>Tanggal Dibuat
+                            </button></li>
+                        </ul>
+                   </div>
+            </div>
+            <!--hapus, sort, pagging, add -->
+            <div class="d-flex justify-content-between mt-3 align-items-center">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ToggleModal" id="MultipleDelete" ><i class="fas fa-trash"></i>Hapus</button>
+            <div class="d-flex justify-content-between align-items-center">
+                    <button>
+                    </button>
+                    <button id="pageSize5" class="m-1">
+                        5
+                    </button>
+                    <i class="fas fa-grip-lines-vertical"></i>
+                    <button id="pageSize10" class="m-1 ms-1">
+                        10
+                    </button>
+                    <i class="fas fa-grip-lines-vertical"></i>
+                    <a title="Tambah data" id="AddData" data-id="@userId" data-bs-toggle="modal" data-bs-target="#ToggleModal"> 
+                        <i class="fas fa-plus ms-1"></i>Tambah</a>             
+                </div>
+            </div>
+            <hr/>
+        @if(Model.Count > 0)
+        {
+                @foreach (VMTblMCustomerMember data in Model)
+            {
+                <div class="row align-items-center">
+                    <div class="col-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="Pasien" value="@data.Id"/>
+                        </div>
+                    </div>
+                    <div class="col-5 text-start">
+                        <div class="fw-bold">@foreach(VMTblMCustomer name in ViewBag.Name)
+                            {                                
+                                if(data.CustomerId == name.Id)
+                                {
+                                    @name.Fullname;
+                                }
+                            }
+                        </div>
+                        <div>@data.CustomerRelationName,
+                            @foreach(VMTblMCustomer dob in ViewBag.DOB)
+                            {
+                                if(data.CustomerId == dob.Id)
+                                {
+                                    @(Math.Floor((DateTime.Now - dob.Dob.GetValueOrDefault()).TotalDays/365));
+                                }
+                            }
+                            Tahun
+                        </div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div class="btn">
+                            <button data-id="@data.Id" class="btn btn-info" title="Edit"
+                                id="EditData" data-bs-toggle="modal" data-bs-target="#ToggleModal"><i class="fas fa-edit"></i>Ubah</button>
+                            <button data-id="@data.Id" class="btn btn-danger" title="Delete"
+                                id="DeleteData" data-bs-toggle="modal" data-bs-target="#ToggleModal" ><i class="fas fa-trash"></i>Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center">Data tidak ditemukan</div>
+        }   
+    </div>
+    <div class="card-footer d-flex justify-content-center">
+        <div class="btn-group">
+            <a id="prev" class="btn btn-light @(Model.PageIndex <= 1 ? "disabled" : "")" title="Previous Page..."
+                asp-controller="Pasien" asp-action="PasienProfile"
+                asp-route-filter="@ViewBag.Filter"
+                asp-route-orderBy="@ViewBag.OrderBy"
+                asp-route-pageNumber="@(Model.PageIndex <= 1 ? Model.PageIndex : Model.PageIndex-1)"><i class="fas fa-backward"></i></a>
+            <span class="input-group-text">Page @Model.PageIndex of @Model.TotalPages</span>
+            <a id="next" class="btn btn-light @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" title="Next Page..."
+                asp-controller="Pasien" asp-action="PasienProfile"
+                asp-route-filter="@ViewBag.Filter"
+                asp-route-orderBy="@ViewBag.OrderBy"
+                asp-route-pageNumber="@(Model.PageIndex >= Model.TotalPages ? Model.PageIndex : Model.PageIndex+1)"><i class="fas fa-forward"></i></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#AddData").click(function (event) {
+        let cmId = $(this).data("id");
+        $("#ToggleModalBody").load("/Pasien/AddPasien/" + cmId)
+    });
+
+    $(".btn-danger").click(function (event) {
+        let cmId = $(this).data("id");
+        $("#ToggleModalBody").load("/Pasien/DeletePasien/" + cmId)
+    });
+
+    $(".btn-secondary").click(function (event) {
+        $("#ToggleModalBody").html("Hapus Pasien")
+        let pasienId = [];
+        $("input:checkbox[name='Pasien']:checked").each(function () {
+            pasienId.push($(this).val());
+        });
+        $("#ToggleModalBody").load("/Pasien/MultipleDeletePasien/" ,{ listId: pasienId })
+    });
+
+    $(".btn-info").click(function (event) {
+        let cmId = $(this).data("id")
+        $("#ToggleModalBody").load("/Pasien/EditPasien/" + cmId)
+    });
+    //$("#SearchPasien").submit(function(){
+    //    this.preventDefault()
+    //})
+    $("#SearchPasien").submit(e=>{
+        e.preventDefault()
+        $.ajax({
+            url:"/Pasien/ListPasien/",
+            type:"post",
+            data: $("#SearchPasien").serialize(),
+            dataType:"json",
+            success: function(response){
+                debugger;
+                if(response.statusCode == 200 || response.statusCode == 201){
+                    $("#TabList").load("/Pasien/ListPasien/" + @userId);
+                }
+                else{
+                    alert(response.message);
+                }
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#SortBy").submit(e=>{
+        e.preventDefault()
+        $.ajax({
+            url:"/Pasien/ListPasien/",
+            type:"post",
+            data: $("#SortBy").serialize(),
+            dataType:"json",
+            success: function(response){
+                debugger;
+                //if(response.statusCode == 200 || response.statusCode == 201){
+                //$("#profilePasien").html()
+                    
+                //}
+                //else{
+                //    alert(response.message);
+                //}
+                //console.log(response)
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#next").click(e=>{
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien?id=@userId&pageNumber="+@(Model.PageIndex+1),
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#prev").click(e=>{
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien?id=@userId&pageNumber="+@(Model.PageIndex-1),
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#pageSize5").click(e=>{
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien?id=@userId&pageNumber="+@(Model.PageIndex)+"&pageSizeNumber=5",
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#pageSize10").click(e=>{
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien?id=@userId&pageNumber="+@(Model.PageIndex)+"&pageSizeNumber=10",
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#orderName").click(e=>{
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien/@userId?orderBy=name",
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#orderName").click(e=>{
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien/@userId?orderBy=name_desc",
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+    
+    $("#OrderAge").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien/@userId?orderBy=age",
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#OrderAge").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/ListPasien/@userId?orderBy=age_desc",
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#OrderCR").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/ListPasien/@userId?orderBy=cr",
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#OrderCR").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/ListPasien/@userId?orderBy=cr_desc",
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#OrderAdd").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url:"/Pasien/ListPasien/@userId?orderBy=add",
+            beforeSend: function(){},
+            success: function(response){
+                debugger;                
+                $("#TabList").html(response);
+            },
+            error: function(errResponse){
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+
+    $("#OrderAdd").click(e => {
+        e.preventDefault()
+        debugger;
+
+        $.ajax({
+            url: "/Pasien/ListPasien/@userId?orderBy=add_desc",
+            beforeSend: function () { },
+            success: function (response) {
+                debugger;
+                $("#TabList").html(response);
+            },
+            error: function (errResponse) {
+                debugger;
+                $("#TabList").html(errResponse.responseText)
+            }
+        });
+    })
+</script>

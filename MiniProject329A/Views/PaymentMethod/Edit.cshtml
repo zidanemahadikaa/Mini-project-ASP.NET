@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VMTblMPaymentMethod?
+
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+
+}
+
+
+<form id="EditPaymentMethod" method="post" asp-action="Edit">
+    <div class="card">
+        <div class="card-header h3">@ViewBag.Title</div>
+        <div class="card-body">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="ModifiedBy" value="@userId" />
+            <div class="input-group">
+                <label class="col-5 input-group-text">Metode Pembayaran<sup class="text-danger">*</sup> :</label>
+                <input class="col-7 form-control" type="text" name="Name" value="@Model.Name"/>
+            </div>
+            <div id="responseMessageEditPaymentMethod" class="text-danger" style="display: none;"></div>
+
+            <hr />
+        </div>
+        <div class="card-footer">
+            <button id="btnEditAcc" type="submit" style="background-color:#ADDFFF" class="btn col-12">Edit</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#EditPaymentMethod").validate({
+        errorClass: "text-danger text-center",
+        rules: {
+            "Name": {
+                "required": true
+            }
+        }, 
+        messages: {
+            "Name": {
+                "required": "Nama Metode Pembayaran Harus Diisi"
+            }
+        },
+        submitHandler: function () {
+            return false;
+        }
+    });
+
+    $("#EditPaymentMethod").submit(function (event) {
+        event.preventDefault();
+        if ($("#EditPaymentMethod").valid()) {
+            $.ajax({
+                url: "/PaymentMethod/Edit",
+                type: "post",
+                data: $("#EditPaymentMethod").serialize(),
+                dataType: "json",
+                beforeSend: function () {
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.statusCode == 201 || response.statusCode == 200) {
+                        location.reload();
+                    }
+                    else {
+                        $("#responseMessageEditPaymentMethod").html(response.message).show();
+                    }
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert("Edit Metode Pembayaran Gagal");
+                }
+            })
+
+        }
+    });
+</script>

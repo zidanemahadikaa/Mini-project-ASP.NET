@@ -1,0 +1,108 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<form id="frmRegister" method="post" asp-action="EmailVerif">
+    <div class="card">
+        <div class="card-header text-info" style="font-size:27px;"><strong>@ViewBag.Title</strong></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <div>Masukkan email anda, kami perlu melakukan pengecekan</div>
+                    <div>&nbsp;</div>
+                    <label><i>Email</i><sup class="text-danger">*</sup></label>
+                    <input class="form-control" id="valEmail" type="email" name="Email" placeholder="Insert your email..." />
+
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button id="btnRegister" type="submit" class="btn btn-primary">Cek Email</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $.validator.addMethod(
+        "emailExist",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/LupaPassword/CheckYourEmail/",
+                type: "post",
+                data: { Email: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "Email tidak terdaftar"
+    );
+    $("#frmRegister").validate({
+        errorClass: "text-danger",
+        rules: {
+            Email: {
+                "required": true,
+                "email": true,
+                "emailExist":true
+            }
+
+        },
+        messages: {
+            Email: {
+                "required": "*email harus diisi",
+                "email": "*mohon isi email yang sesuai",
+                "emailExist":"*Email tidak terdaftar"
+            }
+        },
+        submitHandler: function () {
+            debugger;
+            return false;
+        }
+    });
+    $("#frmRegister").submit(function (event) {
+
+        event.preventDefault();
+        if ($("#frmRegister").valid()) {
+            let email = {
+                email: $("#valEmail").val()
+            }
+            debugger;
+
+           
+            $.ajax({
+                url: "/LupaPassword/OtpCode/",
+                type: "post",
+                data: email,
+                dataType: "text",
+                beforeSend: function () {
+
+                },
+                success: function (response) {
+                    debugger;
+                    $("#staticModalBody").html(response);
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert("Process Failed");
+                }
+            })
+
+        }
+    });
+</script>
+

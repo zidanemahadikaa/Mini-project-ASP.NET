@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MiniProject329A</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <Link rel="stylesheet" href="~/lib/fontawesome/css/all.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MiniProject329A.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+</head>
+
+<body class=" background-color: lightskyblue;">
+ <partial name="_Alert" />
+<header>
+            <div class="container-fluid py-1 d-none d-lg-flex">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <small class="me-3">
+                                <i class="fas fa-clock "></i><span> @DateTime.Now.ToString("D")</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</header>
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <partial name="_Modal" />
+
+<footer class="border-top footer text-muted bg-white fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+                <div class=" col-8 text-start">
+                    <a>kasguigfufg</a>
+                </div>
+                <div class="col-4 text-end">
+                    <a href="https://web.facebook.com/?_rdc=1&_rdr" class="btn btn-sm-square btn-primary ms-2"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm-square btn-primary ms-2" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-sm-square btn-primary ms-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-sm-square btn-primary ms-2" href=""><i class="fab fa-youtube"></i></a>
+                </div>
+        </div>
+            
+    </div>
+       
+</footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

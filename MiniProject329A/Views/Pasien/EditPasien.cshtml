@@ -1,0 +1,202 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model VMTblMCustomerMember
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+}
+
+<form id="EditDataPasien" method="post" asp-action="Edit">
+    <div class="card">
+                <div class="card-header bg-primary">
+                    <span class="h3 text-white">Edit Pasien</span>
+                </div>
+                <div class="card-body">                    
+                    <!--form nama lengkap dan -->
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    @*<input type="hidden" name="CustomerId" value="@ViewBag.CustomerId" />*@
+                    <input type="hidden" name="ParentBiodataId" value="@Model.ParentBiodataId" />
+                    <input type="hidden" name="ModifiedBy" value="@userId"/>
+                      <div class="mt-3">
+                        <label class="form-label">Nama Lengkap<sup class="text-danger">*</sup></label>
+                        <input name="Fullname" type="text" class="form-control" id="fullname" value="@ViewBag.CustomerName" selected/>
+                      </div>
+                      <div class="mt-3">
+                        <label class="form-label">Tanggal Lahir<sup>*</sup></label>
+                        <div class="input-group">
+                            <input type="date" name="Dob" class="form-control" id="borndate" value="@ViewBag.CustomerDob" selected/>
+                        </div>                        
+                      </div>
+                      <!--Jenis kelamin-->
+                      <div class="row mt-3">
+                          <div class="col-6">Jenis Kelamin<sup>*</sup></div>
+                          <div class="col-3">
+                              <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="Gender" value="L" id="Gender1" selected/>
+                                   <label class="form-check-label">Laki-Laki</label>
+                                 </div>
+                          </div>
+                          <div class="col-3">
+                              <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="Gender" value="P" id="Gender2" selected/>
+                                   <label class="form-check-label">Perempuan</label>
+                                 </div>
+                          </div>
+                      </div>
+                      <!--Golongan darah-->
+                      <div class="row mt-3">
+                          <div class="col-6">
+                              <label class="form-label">Golongan Darah/Rhesus</label>
+                              <select name="BloodGroupId" class="form-control">
+                                     <option value="">--Pilih--</option>
+                                     @foreach(VMTblMBloodGroup bg in ViewBag.BloodGroup)
+                                      {
+                                          if(ViewBag.CustomerBG == bg.Id){
+                                             <option value="@bg.Id" selected>@bg.Code</option>
+                                          }
+                                          else{
+                                             <option value="@bg.Id">@bg.Code</option>
+                                          }
+                                      }
+                              </select> 
+                          </div>
+                          <div class="col-3 align-self-center">
+                              <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="RhesusType" id="rh1" value="Plus" selected/>
+                                   <label class="form-check-label">Rh +</label>
+                              </div>
+                          </div>
+                          <div class="col-3 align-self-center">
+                              <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="RhesusType" id="rh2" value="Minus" selected/>
+                                   <label class="form-check-label">Rh -</label>
+                              </div>
+                          </div>
+                      </div>
+                      <!--Tinggi dan Berat Badan-->
+                      <div class="row justify-content-between mt-3">
+                          <div class="col-5">
+                              <label class="form-label">Tinggi Badan</label>
+                              <input name="Height" type="text" class="form-control" id="height" selected/>
+                          </div>                          
+                          <div class="col-5">
+                              <label class="form-label">Berat Badan</label>
+                              <input name="Weight" type="text" class="form-control" id="weight" selected/>
+                          </div>
+                      </div>
+                      <!--Relasi-->
+                      <div class="mt-3">
+                          <label class="form-label">Relasi<sup>*</sup></label>
+                          <select name="CustomerRelationId" class="form-control">
+                                   <option class="text-center" value="">--Pilih--</option>
+                    @foreach(VMTblMCustomerRelation cr in ViewBag.CustomerRelation)
+                    {
+                        if(Model.CustomerRelationId == cr.Id)
+                        {
+                            <option value="@cr.Id" selected>@cr.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@cr.Id">@cr.Name</option>
+                        }
+                    }
+                </select>                
+                      </div>
+                      <!--batal dan simpan-->
+                      <div class="mt-4 text-center">                          
+                          <button class="btn btn-primary" type="submit" >Simpan</button>
+                      </div>
+                </div>
+            </div>
+</form>
+
+<script>
+    $("#EditDataPasien").validate({
+        errorClass:"text-danger",
+        rules:{
+            Fullname: {
+                "required":true
+            },
+            Dob:{
+                "required":true
+            },
+            Gender:{
+                "required":true
+            },
+            BloodGroupId:{
+                "required":true
+            },
+            RhesusType:{
+                "required":true
+            },
+            Height:{
+                "required":true
+            },
+            Weight:{
+                "required":true
+            },
+            CustomerRelationId:{
+                "required":true
+            },
+        },  
+        messages: {
+            Fullname:{
+                "required":"*Nama wajib diisi"
+            },
+            Dob:{
+                "required":"*Tanggal lahir wajib diisi"
+            },
+            Gender:{
+                "required":"*Jenis Kelamin wajib diisi"
+            },
+            BloodGroupId:{
+                "required":"*Golongan Darah wajib diisi"
+            },
+            RhesusType:{
+                "required":"*Resus darah wajib diisi"
+            },
+            Height:{
+                "required":"*Tinggi Badan wajib diisi"
+            },
+            Weight:{
+                "required":"*Berat Badan wajib diisi"
+            },
+            CustomerRelationId:{
+                "required":"*Relasi wajib diisi"
+            },
+        },
+        submitHandler: function(){
+            debugger;
+            return false;
+        }
+    });
+
+    $("#EditDataPasien").submit(function(event){
+        event.preventDefault();
+
+        if($("#EditDataPasien").valid()){
+            $.ajax({
+                url:"/Pasien/Edit/",
+                type:"post",
+                data: $("#EditDataPasien").serialize(),
+                dataType:"json",
+                success: function(response){
+                    debugger;
+                    if(response.statusCode == 200 || response.statusCode == 201){
+                        $("#TabList").load("/Pasien/ListPasien/" + @userId);
+                        $("#ToggleModal").modal("hide");
+                    }
+                    else{
+                        alert(response.message);
+                    }
+                },
+                error: function(errResponse){
+                    debugger;
+                    alert("proses gagal");
+                }
+            });
+        }
+    });
+</script>

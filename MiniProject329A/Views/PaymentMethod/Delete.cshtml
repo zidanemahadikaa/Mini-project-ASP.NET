@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VMTblMPaymentMethod?
+
+@{
+    Layout = null;
+    int? userId = Context.Session.GetInt32("UserId");
+
+}
+
+<div class="card">
+    <div class="card-header">@ViewBag.Title</div>
+    <div class="card-body">
+        <i class="fas fa-exclamation-triangle float-xxl-start text-danger"></i>
+        <span>Hapus Metode Pembayaran : @Model.Name</span>
+    </div>
+    <div class="card-footer text-end">
+        <button id="btnDeleteAcc" type="button" class="btn col-12" style="background-color:#ADDFFF">Hapus</button>
+    </div>
+    <div id="responseMessageDeletePaymentMethod" class="text-danger" style="display: none;"></div>
+
+</div>
+
+<script>
+    $("#btnDeleteAcc").click(() => {
+        $.ajax({
+            url: "/PaymentMethod/Delete",
+            type: "post",
+            data: { "id": @Model.Id, "userId": @userId },
+            datatype: "json",
+            beforeSend: function () {
+            },
+            success: function (response) {
+                debugger;
+                if (response.statusCode == 201 || response.statusCode == 200) {
+                    location.reload();
+                }
+                else {
+                    $("#responseMessageDeletePaymentMethod").html(response.message).show();
+                }
+            },
+            error: function (errResponse) {
+                debugger;
+                alert("Delete Payment Method prosess failed");
+            }
+        });
+    });
+</script>
+

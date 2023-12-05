@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model long
+@{
+    Layout = null;
+}
+<div class="card">
+    <div class="card-header">@ViewBag.Title</div>
+    <div class="card-body">
+        <input type="hidden" name="Id" value="@ViewBag.id"></input>
+        <i class="fas fa-exclamation-triangle float-lg-start"></i>
+        <span>Apakah anda yakin ingin menghapus edukasi level dengan nama "@ViewBag.name"</span>
+    </div>
+    <div class="card-footer text-end">
+        <button class="btn btn-danger" id="btnConfirm">Confirm</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+    </div>
+</div>
+
+<script>
+    $("#btnConfirm").click(() => {
+        $.ajax({
+            url: "/EducationLevel/Delete",
+            type: "post",
+            data: {
+                "id": @ViewBag.id,
+                "userId": 1
+            },
+            datatype: "json",
+            beforeSend: function () { },
+            success: function (response) {
+                if (response.statusCode == 201 || response.statusCode == 200) {
+                    location.reload();
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function (errResponse) {
+                alert("Menghapus Level Edukasi gagal");
+            }
+        });
+    })
+</script>

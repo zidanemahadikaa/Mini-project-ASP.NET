@@ -1,0 +1,303 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+    // int? role = Context.Session.GetInt32("UserRole");
+}
+
+<form id="frmLogin" method="post" asp-action="Index">
+    <div class="card">
+        <div class="card-header text-info" style="font-size:27px;"><strong>@ViewBag.Title</strong></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <div>&nbsp;</div>
+                    <label><i>Email</i><sup class="text-danger">*</sup></label>
+                    <input class="form-control" id="valEmail" type="email" name="Email" placeholder="Insert your email..." />
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <div>&nbsp;</div>
+                    <label><i>Password</i><sup class="text-danger">*</sup></label>
+                    <input class="form-control" id="valPassword" type="password" name="Password" placeholder="Insert your password..." />
+                </div>
+                <div class="col-1"></div>
+            </div>
+
+        </div>
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </div>
+</form>
+    <div class="card text-secondary">
+        <div class="card-body text-center">
+            <div>&nbsp;</div>
+            <div id="lupaPass"><strong>Lupa Password?</strong></div>
+            <div style="font-size:15px;"><strong>atau</strong></div>
+            <div >
+                <strong>
+                    Belum punya akun?
+                    <a id="linkDaftar" class="text-info"  >Daftar</a>
+                </strong>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $.validator.addMethod(
+        "emailExist",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/LupaPassword/CheckYourEmail/",
+                type: "post",
+                data: { Email: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "Email tidak terdaftar"
+    );
+    $.validator.addMethod(
+        "HurufKecil",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/LupaPassword/KurangHurufK/",
+                type: "post",
+                data: { Password: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "Password kurang huruf kecil"
+    );
+    $.validator.addMethod(
+        "HurufBesar",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/LupaPassword/KurangHurufB/",
+                type: "post",
+                data: { Password: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "*Password kurang huruf besar"
+    );
+    $.validator.addMethod(
+        "Simbol",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/LupaPassword/KurangSimbol/",
+                type: "post",
+                data: { Password: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "*Password kurang simbol"
+    );
+    $.validator.addMethod(
+        "Angka",
+        function (value, element, params) {
+            var result = false;
+
+            $.ajax({
+                url: "/LupaPassword/KurangAngka/",
+                type: "post",
+                data: { Password: value },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    result = response;
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert(response.message);
+                    result = false;
+                }
+            });
+
+            return result;
+        },
+        "*Password kurang Angka"
+    );
+
+    $("#frmLogin").validate({
+        errorClass: "text-danger",
+        rules: {
+            Email: {
+                "required": true,
+                "email": true,
+                "emailExist": true
+            },
+            Password: {
+                "required": true,
+                "minlength": 8,
+                "HurufKecil": true,
+                "HurufBesar": true,
+                "Simbol": true,
+                "Angka": true
+            }
+        },
+        messages: {
+            Email: {
+                "required": "*Email harus diisi",
+                "email": "*mohon isi email yang sesuai",
+                "emailExist": "*Email tidak terdaftar"
+            },
+            Password: {
+                "required": "*Silahkan set password terlebih dahulu",
+                "minlength": "*Password minimal harus terdiri dari 8 karakter",
+                "HurufKecil": "*Password kurang huruf kecil",
+                "HurufBesar": "*Password kurang huruf besar",
+                "Simbol": "*Password kurang simbol",
+                "Angka": "*Password kurang angka"
+            }
+        },
+        submitHandler: function () {
+            debugger;
+            return false;
+        }
+    });
+    $("#frmLogin").submit(function (event) {
+
+        event.preventDefault();
+        if ($("#frmLogin").valid()) {
+            let data = {
+                email: $("#valEmail").val(),
+                password: $("#valPassword").val()
+            };
+            
+            let password = $("#valPassword").val();
+            debugger;
+
+            $.ajax({
+                url: "/Login/Login/",
+                type: "get",
+                data: data,
+                dataType: "json",
+                beforeSend: function () {
+
+                },
+                success: function (response) {
+                    debugger;
+                    if (response.statusCode == 200 && response.data.loginAttempt >= 0) {
+                        debugger;
+                        if(response.data.roleId == 2){
+                            location.replace("/Dokter/Index/");
+                        }
+                        else if (response.data.roleId == 1){
+                            location.replace("/Admin/Index/");
+                        }
+                        else if (response.data.roleId == 3){
+                            location.replace("/Pasien/Index/");
+                        }
+                        
+                    }
+                    else{
+                        location.reload();
+                    }
+
+                },
+                Error: function (errResponse) {
+                    debugger;
+                    alert("Process Failed");
+                }
+            })
+        }
+    });
+
+    $("#linkDaftar").click(function (event) {
+        debugger;
+        $.ajax({
+            url: "/Register/EmailVerif/",
+            beforeSend: function () {
+
+            },
+            success: function (response) {
+                debugger;
+                $("#staticModalBody").html(response);
+                
+            },
+            error: function (errResponse) {
+                debugger;
+                alert("Process Failed");
+            }
+        });
+
+    });
+    $("#lupaPass").click(function (event) {
+        debugger;
+        $.ajax({
+            url: "/LupaPassword/EmailVerif/",
+            beforeSend: function () {
+
+            },
+            success: function (response) {
+                debugger;
+                $("#staticModalBody").html(response);
+
+            },
+            error: function (errResponse) {
+                debugger;
+                alert("Process Failed");
+            }
+        });
+
+    });
+
+</script>

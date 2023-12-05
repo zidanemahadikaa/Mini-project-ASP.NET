@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+    <button class="btn btn-info" title="Delete..." data-bs-toggle="modal" data-bs-target="#staticModal">
+        Register
+    </button>
+</div>
+
+<script>
+    $(".btn-info").click(function (event) {
+        debugger;
+        $("#staticModalBody").load("/Register/EmailVerif/")
+
+    });
+</script>

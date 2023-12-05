@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VMTblMUser
+@{
+    Layout = null;
+    string? FullName = Context.Session.GetString("UserNama");
+    int? userId = Context.Session.GetInt32("UserId");
+}
+
+<div class="container border-top p-0 mb-5" data-bs-spy="scroll">
+    <div class="card mt-2">
+        <div class="row m-2 ">
+            <div class="col-sm-4 table-bordered border-end">
+                <div class="container mt-3 text-center">
+                    <a class="nav-link text-end m-0" title="Edit Foto" id="EditFoto" data-bs-toggle="modal" data-bs-target="#ToggleModal"><i class="fas fa-camera"></i></a>
+                    <img src="~/@ViewBag.ImgFolder/@(Model.Image_Path??"image-user.png")" class="rounded-circle text-center fit-cover position-relative" alt="" width="236" height="236" ;"
+                         alt="@(Model.Image_Path?? "--N/A--")" title="@(Model.Image_Path ?? "--N/A--")" />
+                    <div>
+                        <h5><i class="fas fa-star"></i></h5>
+                        <h5>@FullName</h5>
+                        <p>Sejak @Model.CreatedOn</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <a data-id="@userId" class="list-group-item list-group-item-action text-primary" id="ListPasien">Pasien</a>
+                            <a data-id="@userId" class="list-group-item list-group-item-action text-primary" id="AppointmentHistory">Riwayat Kedatangan</a>
+                            <a class="list-group-item list-group-item-action text-primary" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="">Messages</a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-sm-none">
+            </div>
+            <div id="TabList" class="col-sm-8">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#menu1">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#AlamtId">Alamat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#menu3">Pembayaran</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane container active" id="menu1">...</div>
+                    <div class="tab-pane container fade" id="Tabalamat">
+                    </div>
+                    <div class="tab-pane container fade" id="menu3">...</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $("#EditFoto").click(function (event) {
+        debugger;
+        let Userid = 1;
+        $("#ToggleModalBody").load("/Admin/GantiFoto/" + Userid)
+
+    });
+
+    $("#alamtId").click(function (event) {
+       
+        $("#Tabalamat").load("/Pasien/TabAlamat/")
+
+    });
+
+    $("#ListPasien").click(function (event) {
+        
+        let UserId = $(this).data("id")
+        debugger;
+        $("#TabList").load("/Pasien/ListPasien/" + UserId);
+
+    });
+
+    $("#AppointmentHistory").click(function (event) {
+        
+        let UserId = $(this).data("id")
+        debugger;
+        $("#TabList").load("/Pasien/AppointmentHistoryPasien/" + UserId);
+
+    });
+
+
+</script>

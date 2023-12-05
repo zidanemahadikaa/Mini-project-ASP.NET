@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<form id="frmGantiFoto" method="post" asp-action="GantiFoto" enctype="multipart/form-data">
+    <div class="card">
+        <div class="card-header h5">Edit Image</div>
+        <div class="card-body">
+            <input type="hidden" name="CreateBy" value="1" />
+            <div class="input-group my-1">
+                <input class="form-control" type="file" name="ImageFile" placeholder="Input Picture...." />
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#frmGantiFoto").submit(function (event) {
+        //Prevent the Form Submit process
+        event.preventDefault();
+
+        if ($("#frmGantiFoto").valid()) {
+            debugger
+            let formData = new FormData($("#frmGantiFoto")[0]);
+
+            $.ajax({
+                url: "/Admin/GantiFoto",
+                type: "post",
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () { },
+                success: function (response) {
+                    //Jika Sukses, Refresh halaman Product Index
+                    if (response.statusCode == 201 || response.statusCode == 200) {
+                        debugger
+                        location.reload();
+                    }
+                    // Jika Gagal, tampilkan Pop-Up Alert untuk Error Message
+                    else {
+                        alert(response.message);
+                    }
+                },
+                error: function (errResponse) {
+                    debugger;
+                    alert("Uplode process failed!");
+                }
+            });
+        }
+    });
+</script>

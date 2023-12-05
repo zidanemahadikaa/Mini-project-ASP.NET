@@ -1,0 +1,171 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<form id="frmOTP" method="post" asp-action="SetPassword">
+    <div class="card">
+        <div class="card-header text-info" style="font-size:27px;"><strong>@ViewBag.Title</strong></div>
+        <div class="card-body">
+            <div class="row">
+                <input type="hidden" id="otpCheck" value="@ViewBag.OtpCode" />
+                <div class="col-1"></div>
+                <div  class="col-10">
+                    <div>Masukkan kode OTP yang telah dikirimkan ke email anda</div>
+                    <div>&nbsp;</div>
+                        <input type="hidden" id="valEmail" name="Email" value="@ViewBag.Email" />
+                        <input class="form-control" id="valOTP" type="text" name="OTP" placeholder="Insert your OTP code..." />
+                    <div id="OTPCheck"></div>
+                </div>
+                <div class="col-1"></div>
+                <div class="text-center" id="reSend">Kirim ulang kode OTP dalam <span id="timer"></span> </div>
+                <div class="text-center" id="expired"></div>
+            </div>
+            
+        </div>
+        <div class="card-footer text-center">
+            <button id="btnOTP" type="submit" class="btn btn-primary">Verifikasi OTP</button>
+            <span id="kirimUlang"></span>
+        </div>
+    </div>
+</form>
+
+<script>
+
+
+
+    $("#frmOTP").validate({
+        errorClass: "text-danger",
+        rules: {
+            OTP: {
+                "required": true
+            }
+        },
+        messages: {
+            OTP: {
+                "required": "*kode OTP harus diisi"
+            }
+        },
+        submitHandler: function () {
+            debugger;
+            return false;
+        }
+    });
+    $("#frmOTP").submit(function (event) {
+        event.preventDefault();
+        let data = {
+            email: $("#valEmail").val(),
+            Token: $("#valOTP").val()
+        };
+        let OTP = $("#valOTP").val();
+        let otpCheck = $("#otpCheck").val();
+        let otpEx = $("#expired").text();
+        debugger;
+
+        if ($("#frmOTP").valid()) { 
+            
+            if (OTP == otpCheck ) {
+                // if (otpEx != "Kode kadaluarsa") {
+                    debugger;
+                    $.ajax({
+                        url: "/Register/SetPassword/",
+                        type: "post",
+                        data: data,
+                        dataType: "text",
+                        success: function (response) {
+                            debugger;
+                            $("#staticModalBody").html(response); 
+                        },
+                        error: function (errResponse) {
+                            debugger;
+                            alert("Process Failed");
+                        }
+                    })
+                // }
+                
+            }
+            else {
+                let otpTidakValid = $("#OTPCheck").text();
+                if (otpTidakValid == "") {
+
+                    $("#OTPCheck").append('<div class="text-danger"> <i><sup class="text-danger">*</sup>Kode OTP tidak valid</i></div >');
+                }
+            }
+         
+        }
+    });
+    $("#kirimUlang").click(function () {
+        let data = {
+            email: $("#valEmail").val(),
+            Token: $("#otpCheck").val()
+        };
+        debugger;
+
+        
+        $.ajax({
+            url: "/Register/OtpResend/",
+            type: "post",
+            data: data,
+            dataType: "text",
+            beforeSend: function () {
+
+            },
+            success: function (response) {
+                debugger;
+                $("#staticModalBody").html(response);
+                
+            },
+            error: function (errResponse) {
+                debugger;
+                alert("Process Failed");
+            }
+        })
+
+    });
+
+    var waktuAkhir = new Date();
+    waktuAkhir.setMinutes(waktuAkhir.getMinutes() + 3);
+
+    var x = setInterval(function () {
+
+        var sekarang = new Date();
+
+        var distance = waktuAkhir - sekarang;
+
+
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("reSend").innerHTML = '<i>Countdown berakhir, klik tombol kirim ulang jika OTP belum terkirim</i>';
+            document.getElementById("kirimUlang").innerHTML = '<button id="sbmtOTP" type="button" class="btn btn-primary">Kirim ulang OTP</button>';
+        }
+    }, 499);
+
+    var Akhir = new Date();
+    Akhir.setMinutes(Akhir.getMinutes() + 10);
+
+    var y = setInterval(function () {
+
+        var now = new Date();
+
+        var distance = Akhir - now;
+
+
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance < 0) {
+            clearInterval(y);
+            document.getElementById("reSend").innerHTML = '<i class="text-danger">Kode kadaluarsa</i>';
+        }
+    }, 499);
+
+
+    
+        
+</script>

@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model VMTblMCustomerRelation?
+@{
+    Layout = null;
+}
+
+<form id="EditCustomerRelation" method="post" asp-action="Edit">
+    <div class="card">
+        <div class="card-header h3">@ViewBag.Title</div>
+        <div class="card-body">
+            <input type="hidden" name="Id" value="@Model.Id"/>
+            <input type="hidden" name="ModifiedBy" value="1"/>
+            <div class="input-group">
+                <label class="clo-2 input-group-text">Name<sup class="text-danger">*</sup></label>
+                <input class="form-control" type="text" name="Name" value="@Model.Name" />
+            </div>
+        </div>
+        <div class="card-footer">
+            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#EditCustomerRelation").validate({
+        errorClass:"text-danger",
+        rules: {
+            Name: {
+                "required":true                
+            }
+        },
+        submitHandler: function(){
+            debugger;
+            return false;
+        }
+    }),
+
+    $("#EditCustomerRelation").submit(function(event) {
+        event.preventDefault();
+
+        if($("#EditCustomerRelation").valid()) {            
+                debugger;
+                $.ajax({
+                    url:"/CustomerRelation/Edit",
+                    type: "post",
+                    data: $("#EditCustomerRelation").serialize(),
+                    dataType: "json",
+                    beforeSend: function(){
+
+                    },
+                    success: function(response){
+                        if(response.statusCode == 200 || response.statusCode == 201){
+                            debugger;
+                            location.reload();
+                        }
+                        else{
+                            alert(response.message);
+                            location.reload();
+                        }
+                    },
+                    error: function(errResponse){
+                        alert("proses gagal");
+                    }               
+            });           
+        }
+    });
+</script>

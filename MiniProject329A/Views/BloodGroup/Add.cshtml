@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model VMTblMBloodGroup?
+@{
+    Layout = null;
+}
+
+<form id="AddBloodGroup" method="post" asp-action="Add">
+    <div class="card">
+        <div class="card-header h3">@ViewBag.Title</div>
+        <div class="card-body">
+            <input type="hidden" name="CreateBy" value="1"/>
+            <label>Kode<sup class="text-danger">*</sup></label>
+            <input class="form-control mb-2" type="text" name="Code"/>
+            <div>&nbsp;</div>
+            <label>Deskripsi</label>
+            <input class="form-control" type="text" name="Description"/>
+        </div>
+        <div class="card-footer">
+            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#AddBloodGroup").validate({
+        errorClass:"text-danger",
+        rules: {
+            Code: {
+                "required":true,
+                "minlength":1,
+                "maxlength":2
+            }
+        },
+        submitHandler: function(){
+            debugger;
+            return false;
+        }
+    });
+
+    $("#AddBloodGroup").submit(function(event) {
+        event.preventDefault();
+
+        if($("#AddBloodGroup").valid()) {            
+                $.ajax({
+                    url:"BloodGroup/Add",
+                    type:"post",
+                    data: $("#AddBloodGroup").serialize(),
+                    dataType:"json",
+                    beforeSend: function(){
+
+                    },
+                    success: function(response){
+                        debugger;
+                        if(response.statusCode == 200 || response.statusCode == 201){
+                            location.reload();
+                        }
+                        else{
+                            alert(response.message);
+                        }
+                    },
+                    error: function(errResponse){
+                        debugger;
+                        alert("proses gagal");
+                    }                
+            });           
+        }  
+    });
+</script>
